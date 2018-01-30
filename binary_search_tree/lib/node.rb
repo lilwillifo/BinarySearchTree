@@ -5,7 +5,7 @@ class Node
   def initialize(key, value, depth = 0)
     @key = key
     @value = value
-    @depth = 0
+    @depth = depth
     @left = nil
     @right = nil
   end

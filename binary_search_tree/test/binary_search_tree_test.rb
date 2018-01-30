@@ -67,7 +67,62 @@ class BinarySearchTreeTest < Minitest::Test
     assert_instance_of Fixnum, num4
   end
 
-  def test_insert_returns_new_node_depth
+  def test_insert_returns_root_node_depth_right
+    num = @tree.insert(20, "movie")
+    num1 = @tree.insert(21, "movie")
+    num2 = @tree.insert(22, "movie")
+    num3 = @tree.insert(23, "movie")
+    assert_equal 0, num
+    assert_equal 1, num1
+    assert_equal 2, num2
+    assert_equal 3, num3
+  end
+
+  def test_insert_returns_root_node_depth_left
+    num = @tree.insert(20, "movie")
+    num1 = @tree.insert(19, "movie")
+    num2 = @tree.insert(18, "movie")
+    num3 = @tree.insert(17, "movie")
+    assert_equal 0, num
+    assert_equal 1, num1
+    assert_equal 2, num2
+    assert_equal 3, num3
+  end
+
+  def test_insert_returns_root_node_depth_after_2
+    num = @tree.insert(20, "movie")
+    num2 = @tree.insert(5, "another movie")
+    assert_equal 1, num2
+  end
+
+  def test_insert_returns_root_node_depth_after_3
+    num = @tree.insert(20, "movie")
+    num2 = @tree.insert(5, "another movie")
+    num3 = @tree.insert(25, "tralala")
+    assert_equal 1, num2
+  end
+
+  def test_insert_returns_root_node_depth_after_3
+    num = @tree.insert(20, "movie")
+    num2 = @tree.insert(5, "another movie")
+    num3 = @tree.insert(10, "tralala")
+    assert_equal 1, num2
+  end
+
+  def test_include_false_at_start
+    refute @tree.include?(10)
+  end
+
+  def test_include_after_one_insertion
+    num = @tree.insert(30, "Here's a movie")
+    assert @tree.include?(30)
+  end
+
+  def test_include_after_two_insertions
+    @tree.insert(30, "Here's a movie")
+    @tree.insert(50, "Another movie")
+    assert @tree.include?(30)
+    assert @tree.include?(50)
   end
 
 

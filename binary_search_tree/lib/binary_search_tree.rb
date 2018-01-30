@@ -7,7 +7,7 @@ class BinarySearchTree
     @root = nil
     @current_node = @root
   end
-#not getting depth > 1 
+#not getting depth > 1
   def insert(key, value)
     if @root == nil
       set_root(key, value)
@@ -47,8 +47,16 @@ class BinarySearchTree
       new_depth = @current_node.depth + 1
       @current_node.left = Node.new(key, value, new_depth)
     else
-      @current_node = @current_node.right
+      @current_node = @current_node.left
       traverse_the_tree(key, value)
+    end
+  end
+
+  def include?(key)
+    @current_node = @root
+    false if @current_node == nil
+    while @current_node.key != key
+      @current_node = @current_node.right
     end
   end
 end
