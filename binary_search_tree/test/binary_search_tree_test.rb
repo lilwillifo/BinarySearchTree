@@ -54,6 +54,22 @@ class BinarySearchTreeTest < Minitest::Test
     assert_instance_of Node, @tree.go_left(40, "Star Wars")
   end
 
+  def test_insert_returns_integer
+    num = @tree.insert(20, "movie")
+    assert_instance_of Fixnum, num
+  end
+
+  def test_insert_returns_integer_after_several_inserts
+    num = @tree.insert(20, "movie")
+    num2 = @tree.insert(5, "another movie")
+    num3 = @tree.insert(99, "more text")
+    num4 = @tree.insert(8, "")
+    assert_instance_of Fixnum, num4
+  end
+
+  def test_insert_returns_new_node_depth
+  end
+
 
 
 end
