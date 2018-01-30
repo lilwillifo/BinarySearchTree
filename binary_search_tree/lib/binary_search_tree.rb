@@ -53,10 +53,11 @@ class BinarySearchTree
   end
 
   def include?(key)
-    @current_node = @root
-    false if @current_node == nil
-    while @current_node.key != key
-      @current_node = @current_node.right
+    if @root == nil
+      false
+    else
+      true
     end
   end
+
 end
