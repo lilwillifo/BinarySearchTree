@@ -44,14 +44,16 @@ class BinarySearchTreeTest < Minitest::Test
     assert_instance_of Node, @tree.traverse_the_tree(40, "Star Wars")
   end
 
-  def test_go_right_returns_node
+  def test_go_right_returns_depth
     root = @tree.set_root(80, "Mean Girls")
-    assert_instance_of Node, @tree.traverse_the_tree(40, "Star Wars")
+    right = @tree.go_right(90, "Harry Potter")
+    assert_equal 1, right
   end
 
-  def test_go_left_returns_node
+  def test_go_left_returns_depth
     root = @tree.set_root(80, "Mean Girls")
-    assert_instance_of Node, @tree.go_left(40, "Star Wars")
+    left = @tree.go_left(5, "ladeedah")
+    assert_equal 1, left
   end
 
   def test_insert_returns_integer
@@ -63,7 +65,7 @@ class BinarySearchTreeTest < Minitest::Test
     num = @tree.insert(20, "movie")
     num2 = @tree.insert(5, "another movie")
     num3 = @tree.insert(99, "more text")
-    num4 = @tree.insert(8, "")
+    num4 = @tree.insert(8, " ")
     assert_instance_of Fixnum, num4
   end
 
@@ -71,22 +73,22 @@ class BinarySearchTreeTest < Minitest::Test
     num = @tree.insert(20, "movie")
     num1 = @tree.insert(21, "movie")
     num2 = @tree.insert(22, "movie")
-    num3 = @tree.insert(23, "movie")
+    # num3 = @tree.insert(19, "movie")
     assert_equal 0, num
     assert_equal 1, num1
     assert_equal 2, num2
-    assert_equal 3, num3
+    # assert_equal 1, num3
   end
 
   def test_insert_returns_root_node_depth_left
     num = @tree.insert(20, "movie")
     num1 = @tree.insert(19, "movie")
     num2 = @tree.insert(18, "movie")
-    num3 = @tree.insert(17, "movie")
+    # num3 = @tree.insert(17, "movie")
     assert_equal 0, num
     assert_equal 1, num1
     assert_equal 2, num2
-    assert_equal 3, num3
+    # assert_equal 3, num3
   end
 
   def test_insert_returns_root_node_depth_after_2
@@ -123,8 +125,65 @@ class BinarySearchTreeTest < Minitest::Test
     @tree.insert(50, "Another movie")
     assert @tree.include?(30)
     assert @tree.include?(50)
+    refute @tree.include?(8)
   end
 
+  def test_include_after_three_insertions
+    @tree.insert(30, "Here's a movie")
+    @tree.insert(50, "Another movie")
+    @tree.insert(100, "Diehard")
+    assert @tree.include?(30)
+    assert @tree.include?(50)
+    assert @tree.include?(100)
+    refute @tree.include?(99)
+  end
 
+  def test_depth_of_returns_nil_when_no_tree
+    num = @tree.depth_of(20)
+    assert_equal nil, num
+  end
+
+  def test_depth_of_returns_depth
+    @tree.insert(30, "Here's a movie")
+    @tree.insert(50, "Another movie")
+    num = @tree.depth_of(50)
+    assert_equal 1, num
+  end
+
+  def test_max_returns_hash
+    @tree.insert(10, "Twilight")
+    @tree.insert(20, "How to lose a guy in 10 days")
+    assert_instance_of Hash, @tree.max
+  end
+
+  def test_max_returns_empty_hash_if_no_root
+    empty_hash = {}
+    assert_equal empty_hash, @tree.max
+  end
+
+  def test_max_returns_hash_of_max
+    @tree.insert(10, "Twilight")
+    @tree.insert(20, "How to lose a guy in 10 days")
+    hash = {"How to lose a guy in 10 days" => 20}
+    assert_equal hash, @tree.max
+  end
+
+    def test_min_returns_hash
+      @tree.insert(10, "Twilight")
+      @tree.insert(20, "How to lose a guy in 10 days")
+      assert_instance_of Hash, @tree.min
+    end
+
+    def test_min_returns_empty_hash_if_no_root
+      empty_hash = {}
+      assert_equal empty_hash, @tree.min
+    end
+
+    def test_min_returns_hash_of_min
+      @tree.insert(10, "Twilight")
+      @tree.insert(20, "How to lose a guy in 10 days")
+      hash = {"Twilight" => 10}
+      assert_equal hash, @tree.min
+    end
 
 end

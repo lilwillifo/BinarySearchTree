@@ -1,4 +1,5 @@
 require './lib/node.rb'
+require 'pry'
 
 class BinarySearchTree
   attr_reader :root, :current_node
@@ -7,7 +8,7 @@ class BinarySearchTree
     @root = nil
     @current_node = @root
   end
-#not getting depth > 1
+
   def insert(key, value)
     if @root == nil
       set_root(key, value)
@@ -26,16 +27,17 @@ class BinarySearchTree
 
   def traverse_the_tree(key, value) #doesn't account for duplicates
     if key > @current_node.key
-      go_right(key, value)
+      new_depth = go_right(key, value)
+      @current_node.right = Node.new(key, value, new_depth)
     else
-      go_left(key, value)
+      new_depth = go_left(key, value)
+      @current_node.left = Node.new(key, value, new_depth)
     end
   end
 
   def go_right(key, value)
     if @current_node.right == nil
-      new_depth = @current_node.depth + 1
-      @current_node.right = Node.new(key, value, new_depth)
+       @current_node.depth + 1
     else
       @current_node = @current_node.right
       traverse_the_tree(key, value)
@@ -45,18 +47,53 @@ class BinarySearchTree
   def go_left(key, value)
     if @current_node.left == nil
       new_depth = @current_node.depth + 1
-      @current_node.left = Node.new(key, value, new_depth)
     else
       @current_node = @current_node.left
       traverse_the_tree(key, value)
     end
   end
 
-  def include?(key)
-    if @root == nil
+  def include?(key, compare = @root)
+    if  compare == nil
       false
-    else
+    elsif compare.key == key
       true
+    elsif key > compare.key
+      include?(key, compare.right)
+    elsif key < compare.key
+      include?(key, compare.left)
+    end
+  end
+
+  def depth_of(key, compare = @root)
+    if  compare == nil
+      nil
+    elsif compare.key == key
+      compare.depth
+    elsif key > compare.key
+      depth_of(key, compare.right)
+    elsif key < compare.key
+      depth_of(key, compare.left)
+    end
+  end
+
+  def max(compare = @root)
+    if  compare == nil
+      {}
+    elsif compare.right == nil
+      {compare.value => compare.key}
+    else
+      max(compare.right)
+    end
+  end
+
+  def min(compare = @root)
+    if  compare == nil
+      {}
+    elsif compare.left == nil
+      {compare.value => compare.key}
+    else
+      min(compare.left)
     end
   end
 
