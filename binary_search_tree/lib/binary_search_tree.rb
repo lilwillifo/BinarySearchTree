@@ -52,12 +52,18 @@ class BinarySearchTree
     end
   end
 
-  def sort(current_node = @root)
-    if current_node == nil
-      []
-    else
-      current_node.sort(current_node.left)
+  def sort(node = @root, sorted_array = [])
+    if !node.left.nil?
+      sort(node.left, sorted_array)
     end
+    sorted_array.push({node.title => node.score})
+    if !node.right.nil?
+      sort(node.right, sorted_array)
+    end
+    sorted_array
+  end
+
+  def load(filename)
   end
 
 

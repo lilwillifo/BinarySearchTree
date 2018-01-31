@@ -158,15 +158,21 @@ class BinarySearchTreeTest < Minitest::Test
       assert_equal hash, @tree.min
     end
 
-    # def test_sort
-    #   @tree.insert(40, "Harry Potter")
-    #   @tree.insert(10, "Twilight")
-    #   @tree.insert(20, "How to lose a guy in 10 days")
-    #   hash1 = {"Harry Potter" => 40}
-    #   hash2 = {"Twilight" => 10}
-    #   hash3 = {"How to lose a guy in 10 days" => 20}
-    #   array = [hash2, hash3, hash1]
-    #   assert_equal array, @tree.sort
-    # end
+    def test_sort
+      @tree.insert(40, "Harry Potter")
+      @tree.insert(10, "Twilight")
+      @tree.insert(20, "How to lose a guy in 10 days")
+      @tree.insert(75, "moviez")
+      hash1 = {"Harry Potter" => 40}
+      hash2 = {"Twilight" => 10}
+      hash3 = {"How to lose a guy in 10 days" => 20}
+      hash4 = {"moviez" => 75}
+      array = [hash2, hash3, hash1, hash4]
+      assert_instance_of Array, @tree.sort
+      assert_equal array, @tree.sort
+    end
+
+    def test_load
+    end
 
 end

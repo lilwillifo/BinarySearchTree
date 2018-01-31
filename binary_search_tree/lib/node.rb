@@ -1,3 +1,5 @@
+require 'pry'
+
 class Node
   attr_reader :score, :title
   attr_accessor :left, :right, :depth
@@ -64,13 +66,6 @@ class Node
     end
   end
 
-  # def sort(current_node)
-  #   sorted_array = []
-  #   if current_node.left != nil
-  #   sort(current_node.left)
-  #   else
-  #     sorted_array << {current_node.title => current_node.score}
-  #   end
-  # end
+
 
 end
