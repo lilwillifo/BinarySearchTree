@@ -18,42 +18,14 @@ class BinarySearchTreeTest < Minitest::Test
     assert_equal nil, @tree.root
   end
 
-  def test_current_node_starts_as_nil
-    assert_equal nil, @tree.current_node
-  end
-
-  def test_set_root_creates_a_node_and_defines_root
-    root = @tree.set_root(50, "The Shining")
-    assert_instance_of Node, root
-    assert_equal root, @tree.root
-  end
-
-  def test_set_root_changes_current_node
-    root = @tree.set_root(80, "Mean Girls")
-    assert_instance_of Node, @tree.current_node
-    assert_equal @tree.current_node, @tree.root
+  def test_insert_defines_root
+    root = @tree.insert(50, "The Shining")
+    assert_equal root, @tree.root.depth
   end
 
   def test_set_root_has_depth_zero
-    root = @tree.set_root(80, "Mean Girls")
+    root = @tree.insert(80, "Mean Girls")
     assert_equal 0, @tree.root.depth
-  end
-
-  def test_traverse_the_the_tree_returns_node
-    root = @tree.set_root(80, "Mean Girls")
-    assert_instance_of Node, @tree.traverse_the_tree(40, "Star Wars")
-  end
-
-  def test_go_right_returns_depth
-    root = @tree.set_root(80, "Mean Girls")
-    right = @tree.go_right(90, "Harry Potter")
-    assert_equal 1, right
-  end
-
-  def test_go_left_returns_depth
-    root = @tree.set_root(80, "Mean Girls")
-    left = @tree.go_left(5, "ladeedah")
-    assert_equal 1, left
   end
 
   def test_insert_returns_integer
@@ -69,42 +41,42 @@ class BinarySearchTreeTest < Minitest::Test
     assert_instance_of Fixnum, num4
   end
 
-  def test_insert_returns_root_node_depth_right
+  def test_insert_returns_depth_right
     num = @tree.insert(20, "movie")
     num1 = @tree.insert(21, "movie")
     num2 = @tree.insert(22, "movie")
-    # num3 = @tree.insert(19, "movie")
+    num3 = @tree.insert(19, "movie")
     assert_equal 0, num
     assert_equal 1, num1
     assert_equal 2, num2
-    # assert_equal 1, num3
+    assert_equal 1, num3
   end
 
-  def test_insert_returns_root_node_depth_left
+  def test_insert_returns_depth_left
     num = @tree.insert(20, "movie")
     num1 = @tree.insert(19, "movie")
     num2 = @tree.insert(18, "movie")
-    # num3 = @tree.insert(17, "movie")
+    num3 = @tree.insert(17, "movie")
     assert_equal 0, num
     assert_equal 1, num1
     assert_equal 2, num2
-    # assert_equal 3, num3
+    assert_equal 3, num3
   end
 
-  def test_insert_returns_root_node_depth_after_2
+  def test_insert_returns_depth_after_2
     num = @tree.insert(20, "movie")
     num2 = @tree.insert(5, "another movie")
     assert_equal 1, num2
   end
 
-  def test_insert_returns_root_node_depth_after_3
+  def test_insert_returns_depth_after_3
     num = @tree.insert(20, "movie")
     num2 = @tree.insert(5, "another movie")
     num3 = @tree.insert(25, "tralala")
     assert_equal 1, num2
   end
 
-  def test_insert_returns_root_node_depth_after_3
+  def test_insert_returns_depth_after_3
     num = @tree.insert(20, "movie")
     num2 = @tree.insert(5, "another movie")
     num3 = @tree.insert(10, "tralala")
@@ -185,5 +157,16 @@ class BinarySearchTreeTest < Minitest::Test
       hash = {"Twilight" => 10}
       assert_equal hash, @tree.min
     end
+
+    # def test_sort
+    #   @tree.insert(40, "Harry Potter")
+    #   @tree.insert(10, "Twilight")
+    #   @tree.insert(20, "How to lose a guy in 10 days")
+    #   hash1 = {"Harry Potter" => 40}
+    #   hash2 = {"Twilight" => 10}
+    #   hash3 = {"How to lose a guy in 10 days" => 20}
+    #   array = [hash2, hash3, hash1]
+    #   assert_equal array, @tree.sort
+    # end
 
 end

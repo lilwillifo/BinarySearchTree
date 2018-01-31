@@ -2,99 +2,63 @@ require './lib/node.rb'
 require 'pry'
 
 class BinarySearchTree
-  attr_reader :root, :current_node
+  attr_reader :root
 
   def initialize
     @root = nil
-    @current_node = @root
   end
 
-  def insert(key, value)
-    if @root == nil
-      set_root(key, value)
+  def insert(score, title, current_node = @root)
+    if @root.nil?
+      @root = Node.new(score, title, 0)
       @root.depth
-    elsif
-    traverse_the_tree(key, value) #returns depth
-    @current_node.depth + 1
-    end
-  end
-
-  def set_root(key, value)
-    @root = Node.new(key, value, 0)
-    @current_node = @root
-  end
-
-
-  def traverse_the_tree(key, value) #doesn't account for duplicates
-    if key > @current_node.key
-      new_depth = go_right(key, value)
-      @current_node.right = Node.new(key, value, new_depth)
     else
-      new_depth = go_left(key, value)
-      @current_node.left = Node.new(key, value, new_depth)
+      new_node = current_node.insert(score, title, @root)
+      new_node.depth
     end
   end
 
-  def go_right(key, value)
-    if @current_node.right == nil
-       @current_node.depth + 1
-    else
-      @current_node = @current_node.right
-      traverse_the_tree(key, value)
-    end
-  end
-
-  def go_left(key, value)
-    if @current_node.left == nil
-      new_depth = @current_node.depth + 1
-    else
-      @current_node = @current_node.left
-      traverse_the_tree(key, value)
-    end
-  end
-
-  def include?(key, compare = @root)
-    if  compare == nil
+  def include?(score, current_node = @root)
+    if current_node.nil?
       false
-    elsif compare.key == key
-      true
-    elsif key > compare.key
-      include?(key, compare.right)
-    elsif key < compare.key
-      include?(key, compare.left)
+    else
+      current_node.include?(score, current_node)
     end
   end
 
-  def depth_of(key, compare = @root)
-    if  compare == nil
+  def depth_of(score, current_node = @root)
+    if include?(score) == false
       nil
-    elsif compare.key == key
-      compare.depth
-    elsif key > compare.key
-      depth_of(key, compare.right)
-    elsif key < compare.key
-      depth_of(key, compare.left)
+    else
+      current_node.depth_of(score, current_node)
     end
   end
 
-  def max(compare = @root)
-    if  compare == nil
+  def max(current_node = @root)
+    if @root.nil?
       {}
-    elsif compare.right == nil
-      {compare.value => compare.key}
+    elsif current_node.right != nil
+      max(current_node.right)
     else
-      max(compare.right)
+      {current_node.title => current_node.score}
     end
   end
 
-  def min(compare = @root)
-    if  compare == nil
+  def min(current_node = @root)
+    if @root.nil?
       {}
-    elsif compare.left == nil
-      {compare.value => compare.key}
     else
-      min(compare.left)
+      current_node.min(current_node)
     end
   end
+
+  def sort(current_node = @root)
+    if current_node == nil
+      []
+    else
+      current_node.sort(current_node.left)
+    end
+  end
+
 
 end
