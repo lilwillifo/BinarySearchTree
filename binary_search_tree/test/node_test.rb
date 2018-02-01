@@ -1,7 +1,6 @@
 require 'minitest'
 require 'minitest/autorun'
 require 'minitest/pride'
-
 require './lib/node.rb'
 
 class NodeTest < Minitest::Test
@@ -44,7 +43,7 @@ class NodeTest < Minitest::Test
     assert_instance_of Node, new_node
   end
 
-  def test_go_right_tracks_depth
+  def test_depth_moving_right
     new_node = @node.insert(15, "movie")
     new_node2 = @node.insert(25, "another movie")
     assert_equal 1, new_node.depth
@@ -56,7 +55,7 @@ class NodeTest < Minitest::Test
     assert_instance_of Node, new_node
   end
 
-  def test_go_left_tracks_depth
+  def test_depth_moving_left
     new_node = @node.insert(7, "movie")
     new_node2 = @node.insert(5, "another movie")
     assert_equal 1, new_node.depth
@@ -93,6 +92,23 @@ class NodeTest < Minitest::Test
     assert_equal 2, @node.depth_of(50)
     assert_equal 3, @node.depth_of(98)
     assert_equal 1, @node.depth_of(2)
+  end
+
+  def test_find_node_at_depth_returns_array
+    assert_instance_of Array, @node.find_nodes_at_depth(0)
+    assert_instance_of Array, @node.find_nodes_at_depth(1)
+  end
+
+  def test_find_node_at_depth
+    node1 = @node.insert(100, "title")
+    node2 = @node.insert(50, "another title")
+    node3 = @node.insert(98, "here's another")
+    node4 = @node.insert(2, "one more")
+
+    assert_equal [@node], @node.find_nodes_at_depth(0)
+    assert_equal [node4, node1], @node.find_nodes_at_depth(1)
+    assert_equal [node2], @node.find_nodes_at_depth(2)
+
   end
 
 end

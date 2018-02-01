@@ -94,14 +94,16 @@ class BinarySearchTree
     end.compact
   end
 
-  def health(depth, current_node = @root)
-    #score, children, %
-    if @root == nil
+  def health(depth)
+    if @root.nil?
       []
     else
-      current_node.health(depth)
+      @root.find_nodes_at_depth(depth).map do |node|
+        children = node.children + 1
+        percent = (children * 100) / @total
+        [node.score, children, percent]
+      end
     end
-
   end
 
 

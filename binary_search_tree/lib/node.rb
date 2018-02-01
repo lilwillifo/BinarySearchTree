@@ -1,7 +1,7 @@
 require 'pry'
 
 class Node
-  attr_reader :score, :title
+  attr_reader :score, :title, :children
   attr_accessor :left, :right, :depth
 
   def initialize(score, title, depth = 0)
@@ -10,9 +10,11 @@ class Node
     @depth = depth
     @left = nil
     @right = nil
+    @children = 0
   end
 
   def insert(score, title)
+    @children += 1
     if score > @score
       go_right(score, title)
     elsif score < @score
@@ -72,6 +74,14 @@ class Node
     end
   end
 
-
+  def find_nodes_at_depth(depth)
+    if depth == @depth
+      [self]
+    else
+      [@left, @right].compact.map do |node|
+        node.find_nodes_at_depth(depth)
+      end.flatten
+    end
+  end
 
 end
