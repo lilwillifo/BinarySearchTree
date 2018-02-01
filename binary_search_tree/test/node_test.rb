@@ -106,6 +106,36 @@ class NodeTest < Minitest::Test
     assert_equal 1, @node.depth_of(2)
   end
 
+  def test_max_returns_hash
+    @node.insert(10, "Twilight")
+    @node.insert(20, "How to lose a guy in 10 days")
+
+    assert_instance_of Hash, @node.max
+  end
+
+  def test_max_returns_hash_of_max
+    @node.insert(10, "Twilight")
+    @node.insert(20, "How to lose a guy in 10 days")
+
+    hash = {"How to lose a guy in 10 days" => 20}
+    assert_equal hash, @node.max
+  end
+
+    def test_min_returns_hash
+      @node.insert(30, "Twilight")
+      @node.insert(20, "How to lose a guy in 10 days")
+
+      assert_instance_of Hash, @node.min
+    end
+
+    def test_min_returns_hash_of_min
+      @node.insert(30, "Twilight")
+      @node.insert(20, "How to lose a guy in 10 days")
+      hash = {"movie title" => 10}
+
+      assert_equal hash, @node.min
+    end
+
   def test_find_node_at_depth_returns_array
     assert_instance_of Array, @node.find_nodes_at_depth(0)
     assert_instance_of Array, @node.find_nodes_at_depth(1)

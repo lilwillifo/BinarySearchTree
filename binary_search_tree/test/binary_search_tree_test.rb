@@ -144,9 +144,9 @@ class BinarySearchTreeTest < Minitest::Test
   end
 
   def test_depth_of_returns_nil_when_no_tree
-    num = @tree.depth_of(20)
+    depth = @tree.depth_of(20)
 
-    assert_equal nil, num
+    assert_equal nil, depth
   end
 
   def test_depth_of_returns_depth

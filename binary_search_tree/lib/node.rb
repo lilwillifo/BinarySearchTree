@@ -1,5 +1,3 @@
-require 'pry'
-
 class Node
   attr_reader :score, :title, :children
   attr_accessor :left, :right, :depth
@@ -38,7 +36,7 @@ class Node
     end
   end
 
-  def include?(score) #refactor
+  def include?(score)
     if score > @score
       if @right != nil
         @right.include?(score)
@@ -66,9 +64,17 @@ class Node
     end
   end
 
+  def max
+    if @right != nil
+    @right.max
+    else
+      {@title => @score}
+    end
+  end
+
   def min
     if @left != nil
-    min(@left)
+    @left.min
     else
       {@title => @score}
     end

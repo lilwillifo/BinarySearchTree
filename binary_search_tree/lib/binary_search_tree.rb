@@ -1,5 +1,4 @@
 require './lib/node.rb'
-require 'pry'
 
 class BinarySearchTree
   attr_reader :root, :total
@@ -39,10 +38,8 @@ class BinarySearchTree
   def max(current_node = @root)
     if @root.nil?
       {}
-    elsif current_node.right != nil
-      max(current_node.right)
     else
-      {current_node.title => current_node.score}
+      current_node.max
     end
   end
 
@@ -62,13 +59,12 @@ class BinarySearchTree
     if !node.right.nil?
       sort(node.right, sorted_array)
     end
-    sorted_array
+      sorted_array
   end
 
   def load(filename)
-    unique_array = array_of_unique_scores(filename)
     count = 0
-    unique_array.each do |hash|
+    array_of_unique_scores(filename).each do |hash|
       count += 1
       insert(hash.values.join.to_i, hash.keys.join)
     end
