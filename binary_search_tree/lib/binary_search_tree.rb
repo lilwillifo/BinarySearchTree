@@ -2,18 +2,20 @@ require './lib/node.rb'
 require 'pry'
 
 class BinarySearchTree
-  attr_reader :root
+  attr_reader :root, :total
 
   def initialize
     @root = nil
+    @total = 0
   end
 
   def insert(score, title, current_node = @root)
+    @total += 1
     if @root.nil?
       @root = Node.new(score, title, 0)
       @root.depth
     else
-      new_node = current_node.insert(score, title, @root)
+      new_node = current_node.insert(score, title)
       new_node.depth
     end
   end
@@ -22,7 +24,7 @@ class BinarySearchTree
     if current_node.nil?
       false
     else
-      current_node.include?(score, current_node)
+      current_node.include?(score)
     end
   end
 
@@ -30,7 +32,7 @@ class BinarySearchTree
     if include?(score) == false
       nil
     else
-      current_node.depth_of(score, current_node)
+      current_node.depth_of(score)
     end
   end
 
@@ -48,7 +50,7 @@ class BinarySearchTree
     if @root.nil?
       {}
     else
-      current_node.min(current_node)
+      current_node.min
     end
   end
 
@@ -92,6 +94,15 @@ class BinarySearchTree
     end.compact
   end
 
+  def health(depth, current_node = @root)
+    #score, children, %
+    if @root == nil
+      []
+    else
+      current_node.health(depth)
+    end
+
+  end
 
 
 end

@@ -12,57 +12,63 @@ class Node
     @right = nil
   end
 
-  def insert(score, title, current_node)
-    if score > current_node.score
-      go_right(score, title, current_node)
-    elsif score < current_node.score
-      go_left(score, title, current_node)
+  def insert(score, title)
+    if score > @score
+      go_right(score, title)
+    elsif score < @score
+      go_left(score, title)
     end
   end
 
-  def go_right(score, title, current_node)
-    if current_node.right.nil?
-      current_node.right = Node.new(score, title, current_node.depth + 1)
+  def go_right(score, title)
+    if @right.nil?
+      @right = Node.new(score, title, @depth + 1)
     else
-      insert(score, title, current_node.right)
+      @right.insert(score, title)
     end
   end
 
-  def go_left(score, title, current_node)
-    if current_node.left.nil?
-      current_node.left = Node.new(score, title, current_node.depth + 1)
+  def go_left(score, title)
+    if @left.nil?
+      @left = Node.new(score, title, @depth + 1)
     else
-      insert(score, title, current_node.left)
+      @left.insert(score, title)
     end
   end
 
-  def include?(score, current_node)
-    if current_node.nil?
+  def include?(score) #refactor
+    if score > @score
+      if @right != nil
+        @right.include?(score)
+      else
         false
-    elsif score > current_node.score
-        include?(score, current_node.right)
-    elsif score < current_node.score
-        include?(score, current_node.left)
-    elsif score == current_node.score
+      end
+    elsif score < @score
+      if @left != nil
+        @left.include?(score)
+      else
+        false
+      end
+    elsif score == @score
         true
     end
   end
 
-  def depth_of(score, current_node)
-    if score > current_node.score
-        depth_of(score, current_node.right)
-    elsif score < current_node.score
-        depth_of(score, current_node.left)
-    elsif score == current_node.score
-        current_node.depth
+  def depth_of(score)
+    if score > @score
+        @right.depth_of(score)
+    elsif score < @score
+        @left.depth_of(score)
+    elsif score == @score
+        @depth
     end
   end
 
-  def min(current_node)
-    if current_node.left != nil
-    min(current_node.left)
+  def min
+    if @left != nil
+    min(@left)
     else
-      {current_node.title => current_node.score}
+      {@title => @score}
     end
   end
 

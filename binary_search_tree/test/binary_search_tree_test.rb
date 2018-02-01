@@ -24,6 +24,27 @@ class BinarySearchTreeTest < Minitest::Test
     assert_equal root, @tree.root.depth
   end
 
+  def test_total_starts_0
+    assert_equal 0, @tree.total
+  end
+
+  def test_insert_adds_to_total
+    @tree.insert(4, "movie")
+    @tree.insert(100, "another movie")
+
+    assert_equal 2, @tree.total
+  end
+
+  def test_insert_adds_total_after_many_inserts
+    num = @tree.insert(20, "movie")
+    num2 = @tree.insert(5, "another movie")
+    num3 = @tree.insert(99, "more text")
+    num4 = @tree.insert(8, " ")
+
+    assert_equal 4, @tree.total
+  end
+
+
   def test_set_root_has_depth_zero
     root = @tree.insert(80, "Mean Girls")
 
@@ -232,5 +253,10 @@ class BinarySearchTreeTest < Minitest::Test
 
       assert_equal 96, @tree.load('./data/movies.txt')
     end
+
+    def test_health_returns_array
+      assert_instance_of Array, @tree.health(0)
+    end
+
 
 end
