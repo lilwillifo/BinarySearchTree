@@ -21,6 +21,10 @@ class NodeTest < Minitest::Test
     assert_equal "movie title", @node.title
   end
 
+  def test_children
+    assert_equal 0, @node.children
+  end
+
   def test_depth_starts_at_zero
     assert_equal 0, @node.depth
   end
@@ -36,6 +40,14 @@ class NodeTest < Minitest::Test
   def test_insert_returns_node
     new_node = @node.insert(5, "movie")
     assert_instance_of Node, new_node
+  end
+
+  def test_insert_adds_children
+    root = @node.insert(23, "a movie")
+    new_node = @node.insert(15, "yet another movie")
+
+    assert_equal 1, root.children
+    assert_equal 0, new_node.children
   end
 
   def test_go_right_returns_node
