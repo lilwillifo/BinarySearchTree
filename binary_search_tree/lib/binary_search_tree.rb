@@ -64,7 +64,34 @@ class BinarySearchTree
   end
 
   def load(filename)
+    unique_array = array_of_unique_scores(filename)
+    count = 0
+    unique_array.each do |hash|
+      count += 1
+      insert(hash.values.join.to_i, hash.keys.join)
+    end
+    count
   end
+
+  def translate_file_to_hashes(filename)
+    file = File.open(filename, "r")
+    file.readlines.map do |line|
+      array = line.chomp.split(", ")
+      score = array.first.to_i
+      title = array[1..-1].join(", ")
+      {title => score}
+    end
+  end
+
+  def array_of_unique_scores(filename)
+    hash_array = translate_file_to_hashes(filename)
+    hash_array.map do |hash|
+      if !include?(hash.values.join.to_i)
+        hash
+      end
+    end.compact
+  end
+
 
 
 end

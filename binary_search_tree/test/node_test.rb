@@ -12,7 +12,7 @@ class NodeTest < Minitest::Test
 
   def test_node_exists
     assert_instance_of Node, @node
-  end
+  end 
 
   def test_score_attribute
     assert_equal 10, @node.score
